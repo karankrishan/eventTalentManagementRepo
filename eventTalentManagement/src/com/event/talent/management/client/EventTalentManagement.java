@@ -38,7 +38,7 @@ public class EventTalentManagement implements EntryPoint {
 	/**
 	 * This is the entry point method.
 	 */
-	public void onModuleLoad() {
+	public void onModuleLoad() {/*
 		final Button sendButton = new Button("Send");
 		final TextBox nameField = new TextBox();
 		nameField.setText("GWT User");
@@ -87,25 +87,25 @@ public class EventTalentManagement implements EntryPoint {
 
 		// Create a handler for the sendButton and nameField
 		class MyHandler implements ClickHandler, KeyUpHandler {
-			/**
+			*//**
 			 * Fired when the user clicks on the sendButton.
-			 */
+			 *//*
 			public void onClick(ClickEvent event) {
 				sendNameToServer();
 			}
 
-			/**
+			*//**
 			 * Fired when the user types in the nameField.
-			 */
+			 *//*
 			public void onKeyUp(KeyUpEvent event) {
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 					sendNameToServer();
 				}
 			}
 
-			/**
+			*//**
 			 * Send the name from the nameField to the server and wait for a response.
-			 */
+			 *//*
 			private void sendNameToServer() {
 				// First, we validate the input.
 				errorLabel.setText("");
@@ -148,5 +148,7 @@ public class EventTalentManagement implements EntryPoint {
 		MyHandler handler = new MyHandler();
 		sendButton.addClickHandler(handler);
 		nameField.addKeyUpHandler(handler);
+	*/
+	RootPanel.get().add(new ParentLayout());	
 	}
 }
