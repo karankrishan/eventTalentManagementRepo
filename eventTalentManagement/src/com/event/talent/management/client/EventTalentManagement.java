@@ -8,6 +8,8 @@ import com.extjs.gxt.ui.client.widget.Window;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -53,8 +55,23 @@ public class EventTalentManagement implements EntryPoint {
 
 			@Override
 			public void onClick(Widget sender) {
-				RootPanel.get().remove(w);
-				new Layout().load();
+				if (null != text.getValue()
+						&& "user".equalsIgnoreCase(text.getValue())
+						&& null != password.getValue()
+						&& "pass".equalsIgnoreCase(password.getValue())) {
+					RootPanel.get().remove(w);
+					new Layout().load();
+				} else {
+					text.validate();
+					password.validate();
+				}
+			}
+		});
+		login.addKeyPressHandler(new KeyPressHandler() {
+			
+			@Override
+			public void onKeyPress(KeyPressEvent event) {
+				
 			}
 		});
 		panel.setWidget(2, 0, reset);
