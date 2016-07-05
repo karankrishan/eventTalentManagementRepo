@@ -12,12 +12,22 @@
   <!-- Inherit the default GWT style sheet.  You can change       -->
   <!-- the theme of your GWT application by uncommenting          -->
   <!-- any one of the following lines.                            -->
-  <inherits name='com.google.gwt.user.theme.clean.Clean'/>
-  <!-- <inherits name='com.google.gwt.user.theme.standard.Standard'/> -->
+<!-- 	<inherits name='com.google.gwt.user.theme.clean.Clean'/>
+ -->	 <!-- <inherits name='com.google.gwt.user.theme.standard.Standard'/> --> 
   <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
-  <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
+  <inherits name='com.google.gwt.user.theme.dark.Dark'/>    
+  <inherits name='com.google.gwt.user.theme.dark.DarkResources'/>    
+  <inherits name='com.google.gwt.user.theme.dark.DarkRTL'/>    
 
   <!-- Other module inherits                                      -->
+  
+  <inherits name='com.extjs.gxt.themes.Themes' />
+  <inherits name='com.extjs.gxt.desktop.WebDesktop' />
+  <inherits name='com.extjs.gxt.ui.GXT' />
+ <!--  <inherits name="com.sencha.gxt.examples.resources.Resources" />
+  <inherits name="com.sencha.gxt.explorer.Explorer" />
+  <inherits name="com.sencha.gxt.explorer.ExplorerGray" /> -->
+  <stylesheet src=""/>
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='com.event.talent.management.client.EventTalentManagement'/>
