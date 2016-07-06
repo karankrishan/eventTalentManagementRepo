@@ -41,7 +41,9 @@ import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.extjs.gxt.ui.client.widget.treepanel.TreePanel;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.NumberFormat;
+import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
+import com.google.gwt.user.client.ui.RootPanel;
 
 public class Layout {
 	private Desktop desktop = new Desktop();
@@ -137,7 +139,7 @@ public class Layout {
 		tool.addSelectionListener(new SelectionListener<MenuEvent>() {
 			@Override
 			public void componentSelected(MenuEvent ce) {
-				Info.display("Event", "The 'Logout' tool was clicked");
+				Location.reload();
 			}
 		});
 		menu.addTool(tool);

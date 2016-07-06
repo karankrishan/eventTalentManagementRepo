@@ -3,81 +3,110 @@ package com.event.talent.management.client;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
+import com.extjs.gxt.ui.client.event.ButtonEvent;
+import com.extjs.gxt.ui.client.event.ComponentEvent;
+import com.extjs.gxt.ui.client.event.KeyListener;
+import com.extjs.gxt.ui.client.event.SelectionListener;
+import com.extjs.gxt.ui.client.widget.Dialog;
 import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.Window;
+import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 public class EventTalentManagement implements EntryPoint {
 
+	private TextField<String> password = new TextField<String>();
+	private TextField<String> userInput = new TextField<String>();
+	private Window w = new Window();
+
 	@Override
 	public void onModuleLoad() {
-		final Window w = new Window();
+		FlexTable panel = new FlexTable();
+		Label userNamelabel = new Label("Username");
+		Label passwordlabel = new Label("Password");
+		userInput.setEmptyText("Username");
+		password.setPassword(Boolean.TRUE);
+		password.setEmptyText("Password");
+
 		w.setClosable(Boolean.FALSE);
 		w.setMinimizable(Boolean.FALSE);
 		w.setMaximizable(Boolean.FALSE);
 		w.setSize(250, 150);
 		w.setLayout(new FitLayout());
-		FlexTable panel = new FlexTable();
-		Label userNamelabel = new Label("Username");
-		final TextField<String> text = new TextField<String>();
-		text.setEmptyText("Enter your full name");
-		Label passwordlabel = new Label("Password");
-		final TextField<String> password = new TextField<String>();
-		password.setPassword(Boolean.TRUE);
-		password.setEmptyText("Password");
 
 		panel.setWidget(0, 0, userNamelabel);
-		panel.setWidget(0, 1, text);
+		panel.setWidget(0, 1, userInput);
 		panel.setWidget(1, 0, passwordlabel);
 		panel.setWidget(1, 1, password);
 
 		// panel.add(password);
 		Button reset = new Button("Reset");
-		reset.addClickListener(new ClickListener() {
+		reset.addSelectionListener(new SelectionListener<ButtonEvent>() {
 
 			@Override
-			public void onClick(Widget sender) {
-				text.reset();
+			public void componentSelected(ButtonEvent ce) {
+				userInput.reset();
 				password.reset();
 			}
 		});
 		Button login = new Button("Login");
-		login.addClickListener(new ClickListener() {
+		login.addSelectionListener(new SelectionListener<ButtonEvent>() {
 
 			@Override
-			public void onClick(Widget sender) {
-				if (null != text.getValue()
-						&& "user".equalsIgnoreCase(text.getValue())
-						&& null != password.getValue()
-						&& "pass".equalsIgnoreCase(password.getValue())) {
+			public void componentSelected(ButtonEvent ce) {
+				if (validateCredentials()) {
 					RootPanel.get().remove(w);
 					new Layout().load();
 				} else {
-					text.validate();
-					password.validate();
+					promptMessage();
 				}
 			}
 		});
-		login.addKeyPressHandler(new KeyPressHandler() {
-			
-			@Override
-			public void onKeyPress(KeyPressEvent event) {
-				
-			}
-		});
+		userInput.addKeyListener(addListner());
+		password.addKeyListener(addListner());
 		panel.setWidget(2, 0, reset);
 		panel.setWidget(2, 1, login);
 		w.add(panel);
 		RootPanel.get().add(w);
 		w.center();
+	}
+
+	private KeyListener addListner() {
+		return new KeyListener() {
+			@Override
+			public void componentKeyPress(ComponentEvent event) {
+				if (event.getKeyCode() == 13) {
+					if (validateCredentials()) {
+						RootPanel.get().remove(w);
+						new Layout().load();
+					} else {
+						promptMessage();
+					}
+				}
+			}
+		};
+	}
+
+	private void promptMessage() {
+		Dialog d = new Dialog();
+		d.setHeadingText("Alert");
+		d.addText("Invalid username/password");
+		d.setBodyStyle("fontWeight:bold;padding:12px;");
+		d.setSize(150, 100);
+		d.setHideOnButtonClick(true);
+		d.setButtons(Dialog.OK);
+		d.show();
+	}
+
+	private boolean validateCredentials() {
+		return null != userInput.getValue()
+				&& "user".equalsIgnoreCase(userInput.getValue())
+				&& null != password.getValue()
+				&& "pass".equalsIgnoreCase(password.getValue());
+
 	}
 }
