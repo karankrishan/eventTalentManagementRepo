@@ -43,7 +43,6 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
-import com.google.gwt.user.client.ui.RootPanel;
 
 public class Layout {
 	private Desktop desktop = new Desktop();
@@ -79,6 +78,7 @@ public class Layout {
 				itemSelected(ce);
 			}
 		};
+		
 		Window gridWindow = createGridWindow();
 		Window accordionWindow = createAccordionWindow();
 		Shortcut s1 = new Shortcut();

@@ -3,6 +3,11 @@ package com.event.talent.management.client;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
+import java.util.Date;
+
+import com.event.talent.management.client.interfaces.LoginRPCService;
+import com.event.talent.management.client.interfaces.LoginRPCServiceAsync;
+import com.event.talent.management.shared.model.UserModel;
 import com.extjs.gxt.ui.client.event.ButtonEvent;
 import com.extjs.gxt.ui.client.event.ComponentEvent;
 import com.extjs.gxt.ui.client.event.KeyListener;
@@ -14,17 +19,33 @@ import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class EventTalentManagement implements EntryPoint {
 
+	LoginRPCServiceAsync service = GWT.create(LoginRPCService.class);
 	private TextField<String> password = new TextField<String>();
 	private TextField<String> userInput = new TextField<String>();
 	private Window w = new Window();
 
 	@Override
 	public void onModuleLoad() {
+		Timer timer = new Timer() {
+
+			@Override
+			public void run() {
+				String cookie = Cookies.getCookie("user");
+				if (null == cookie) {
+					com.google.gwt.user.client.Window.Location.reload();
+				}
+			}
+		};
+		timer.scheduleRepeating(60000);
 		FlexTable panel = new FlexTable();
 		Label userNamelabel = new Label("Username");
 		Label passwordlabel = new Label("Password");
@@ -58,12 +79,7 @@ public class EventTalentManagement implements EntryPoint {
 
 			@Override
 			public void componentSelected(ButtonEvent ce) {
-				if (validateCredentials()) {
-					RootPanel.get().remove(w);
-					new Layout().load();
-				} else {
-					promptMessage();
-				}
+				proceedLogin();
 			}
 		});
 		userInput.addKeyListener(addListner());
@@ -80,12 +96,7 @@ public class EventTalentManagement implements EntryPoint {
 			@Override
 			public void componentKeyPress(ComponentEvent event) {
 				if (event.getKeyCode() == 13) {
-					if (validateCredentials()) {
-						RootPanel.get().remove(w);
-						new Layout().load();
-					} else {
-						promptMessage();
-					}
+					proceedLogin();
 				}
 			}
 		};
@@ -99,6 +110,8 @@ public class EventTalentManagement implements EntryPoint {
 		d.setSize(150, 100);
 		d.setHideOnButtonClick(true);
 		d.setButtons(Dialog.OK);
+		userInput.reset();
+		password.reset();
 		d.show();
 	}
 
@@ -108,5 +121,33 @@ public class EventTalentManagement implements EntryPoint {
 				&& null != password.getValue()
 				&& "pass".equalsIgnoreCase(password.getValue());
 
+	}
+
+	private void proceedLogin() {
+		if (validateCredentials()) {
+			UserModel userModel = new UserModel();
+			userModel.setUsername(userInput.getValue());
+			userModel.setPassword(password.getValue());
+			service.login(userModel, new AsyncCallback<String>() {
+
+				@Override
+				public void onSuccess(String result) {
+					String sessionID = result;
+					long DURATION = 1000 * 65;
+					Date expires = new Date(System.currentTimeMillis()
+							+ DURATION);
+					Cookies.setCookie("user", sessionID, expires);
+					RootPanel.get().remove(w);
+					new Layout().load();
+				}
+
+				@Override
+				public void onFailure(Throwable caught) {
+
+				}
+			});
+		} else {
+			promptMessage();
+		}
 	}
 }

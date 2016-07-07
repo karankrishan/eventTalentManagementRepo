@@ -88,7 +88,7 @@ html, body {
 	/* width: 150px;
 	overflow: hidden; */
 	text-align: left;
-	color: #ffffff;
+/* 	color: #ffffff; */
 }
 #title-bar-wrapper {
 	height:35px;
@@ -218,7 +218,7 @@ html, body {
 	background:url( ../images/taskbar/black/taskbutton.gif ) repeat-x 0 -140px;
 }
 #ux-taskbar .active-win .ux-taskbutton-center button {
-    color:#fff;
+/*     color:#fff; */
 }
 
 #spacer {
