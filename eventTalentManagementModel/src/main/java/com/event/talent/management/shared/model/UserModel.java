@@ -2,7 +2,7 @@ package com.event.talent.management.shared.model;
 
 import java.io.Serializable;
 
-public class UserModel implements Serializable{
+public class UserModel implements Serializable {
 
 	private String username;
 	private String password;

@@ -26,6 +26,12 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.RootPanel;
 
+/**
+ * @author KARAN KRISHAN
+ * Love you GUPTA Monsieur
+ */
+//TODO Needs to be beautified later else people can COPY this and DO THE JOB.
+
 public class EventTalentManagement implements EntryPoint {
 
 	LoginRPCServiceAsync service = GWT.create(LoginRPCService.class);

@@ -44,6 +44,11 @@ import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 
+/**
+ * @author KARAN KRISHAN
+ * Test layout file.
+ */
+//TODO Needs to be beautified later else people can COPY this and DO THE JOB. 
 public class Layout {
 	private Desktop desktop = new Desktop();
 
