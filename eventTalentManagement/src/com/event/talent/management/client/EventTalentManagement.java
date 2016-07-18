@@ -123,7 +123,7 @@ public class EventTalentManagement implements EntryPoint {
 
 	private boolean validateCredentials() {
 		return null != userInput.getValue()
-				&& "user".equalsIgnoreCase(userInput.getValue())
+				&& "Karan".equalsIgnoreCase(userInput.getValue())
 				&& null != password.getValue()
 				&& "pass".equalsIgnoreCase(password.getValue());
 
